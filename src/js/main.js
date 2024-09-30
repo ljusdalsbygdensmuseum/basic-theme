@@ -2,7 +2,7 @@ const $ = jQuery;
 
 import leafletMaps from './modules/leaflet-maps';
 import liveSearch from './modules/live-search';
-import notes from './modules/notes';
+import Notes from './modules/notes';
 
 if($('#map_container').length > 0){
     let markers = [];
@@ -37,4 +37,4 @@ if($('#map_container').length > 0){
 
 const search = new liveSearch();
 
-const note = new notes();
+const note = new Notes();

@@ -1,4 +1,4 @@
-class notes {
+class Notes {
     constructor(){
         this.noteTitleArea = document.querySelectorAll('.note__title');
         this.noteTextArea = document.querySelectorAll('.note__content');
@@ -15,8 +15,15 @@ class notes {
             editBtn.addEventListener('click', () => this.openEdit());
         });
     }
-    delete(){
-        console.log('deleting');
+    async delete(){
+        const response = await fetch(universalData.root_url+'/wp-json/wp/v2/ljm_note/104', {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': ''
+            }
+        }).then(res => console.log(res));
+
     }
     openEdit(){
         console.log('edit clicked');
@@ -24,4 +31,4 @@ class notes {
 }
 
 
-export default notes
+export default Notes
