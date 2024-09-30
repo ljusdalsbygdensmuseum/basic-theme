@@ -23,8 +23,8 @@ get_header();
                 <li class="note">
                     <input class="note__title" type="text" value="<?php echo esc_attr(get_the_title())?>">
                     <textarea class="note__content"><?php echo esc_attr(strip_tags(get_the_content()))?></textarea>
-                    <button class="note__btn">Edit</button>
-                    <button class="note__btn">Delete</button>
+                    <button class="note__btn note__edit">Edit</button>
+                    <button class="note__btn note__delete">Delete</button>
                 </li>
             <?php
         }
