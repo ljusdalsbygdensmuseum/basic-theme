@@ -16,11 +16,13 @@ class Notes {
         });
     }
     async delete(){
+
+        console.log(universalData.nonce);
         const response = await fetch(universalData.root_url+'/wp-json/wp/v2/ljm_note/104', {
             method: 'DELETE',
             headers: {
-                'Content-type': 'application/json',
-                'Authorization': ''
+                //'Content-type': 'application/json',
+                'X-WP-Nonce': universalData.nonce
             }
         }).then(res => console.log(res));
 

@@ -12,7 +12,10 @@ function the_test_scripts(){
 	wp_enqueue_script('main-university-js', get_theme_file_uri('/build/index.js'), array('jquery'), '1.0', true);
 	wp_enqueue_style('university_extra_styles', get_theme_file_uri('/build/index.css'));
 
-	wp_localize_script( 'main-university-js', 'universalData', array('root_url' => get_site_url()));//-----------------------prints the url so that one can find it in js
+	wp_localize_script( 'main-university-js', 'universalData', array(
+		'root_url' => get_site_url(),
+		'nonce' => wp_create_nonce('wp_rest')
+	));//-----------------------prints the url so that one can find it in js
 
 }
 add_action('wp_enqueue_scripts', 'the_test_scripts');
@@ -28,7 +31,10 @@ function the_test_admin_scripts(){
 	wp_enqueue_script('main-university-js', get_theme_file_uri('/build/admin.js'), array('jquery'), '1.0', true);
 	wp_enqueue_style('university_extra_styles', get_theme_file_uri('/build/admin.css'));
 
-	wp_localize_script( 'main-university-js', 'universalData', array('root_url' => get_site_url()));
+	wp_localize_script( 'main-university-js', 'universalData', array(
+		'root_url' => get_site_url(),
+		'nonce' => wp_create_nonce('wp_rest')
+	));
 
 }
 add_action('admin_enqueue_scripts', 'the_test_admin_scripts');
