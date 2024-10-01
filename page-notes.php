@@ -20,7 +20,7 @@ get_header();
         while ($the_notes_posts->have_posts()) {
             $the_notes_posts->the_post();
             ?>
-                <li class="note">
+                <li id="<?php echo get_the_ID()?>" class="note">
                     <input class="note__title" type="text" value="<?php echo esc_attr(get_the_title())?>">
                     <textarea class="note__content"><?php echo esc_attr(strip_tags(get_the_content()))?></textarea>
                     <button class="note__btn note__edit">Edit</button>
