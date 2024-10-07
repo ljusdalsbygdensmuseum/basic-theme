@@ -18,6 +18,8 @@ class Notes {
     async delete(event){
         //get ID of note
         const ID = event.target.closest('.note').id;
+
+        
         // universal data are set in /inc/enqueue
         const response = await fetch(universalData.root_url+'/wp-json/wp/v2/ljm_note/'+ID, {
             method: 'DELETE',
@@ -36,8 +38,7 @@ class Notes {
 
             //remove old note
             const noteHeight = event.target.closest('.note').offsetHeight;
-            //const noteMargin = event.target.closest('.note').currentStyle;
-            console.log(noteMargin);
+            const noteMargin = parseInt(window.getComputedStyle(event.target.closest('.note')).marginBottom);
 
             //change opacity of note
             event.target.closest('.note').style.transition = 'all .2s ease-in-out';
@@ -45,7 +46,7 @@ class Notes {
 
             //change position of note
             setTimeout(()=>{
-                event.target.closest('.note').style.marginTop = '-'+noteHeight+'px';
+                event.target.closest('.note').style.marginTop = '-'+(noteHeight+noteMargin)+'px';
             }, 200);
 
             setTimeout(()=>{
