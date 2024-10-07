@@ -58,15 +58,46 @@ class Notes {
         });
 
     }
+    async saveContent(event){
+        //get note
+        const note = event.target.closest('.note');
+        const titleArea = note.querySelector('.note__title');
+        const textArea = note.querySelector('.note__content');
+        const spinner = note.querySelector('.note__spinner-container');
+
+        //loading visual
+        spinner.innerHTML = '<span class="loader"></span>';
+
+        //data
+        const fieldData = {
+            title: titleArea.value,
+            content: textArea.value
+        };
+        console.log(fieldData);
+
+        // universal data are set in /inc/enqueue
+        const response = await fetch(universalData.root_url+'/wp-json/wp/v2/ljm_note/'+note.dataset.id, {
+            method: 'POST',
+            body: JSON.stringify(fieldData),
+            headers: {
+                'Content-type': 'application/json',
+                'X-WP-Nonce': universalData.nonce
+            }
+        }).then(response=>{
+            // remove spinner
+            spinner.innerHTML = '';
+            console.log(response);
+        });
+
+        // set new default values
+        textArea.defaultValue = textArea.value;
+        titleArea.defaultValue = titleArea.value;
+    }
     clickEdit(event){
         //get note
         const note = event.target.closest('.note');
-        const editbtn = note.querySelector('.note__edit');
-        const savebtn = note.querySelector('.note__save');
-        const titleArea = note.querySelector('.note__title');
-        const textArea = note.querySelector('.note__content');
 
-        if(note.classList.contains('active')){
+        if(note.dataset.state == 'active'){
             this.closeEdit(note);
         }else{
             this.openEdit(note);
@@ -89,7 +120,7 @@ class Notes {
         textArea.focus();
 
         //add class of active
-        note.classList.add('active');
+        note.dataset.state = 'active';
     }
     closeEdit(note){
         const editbtn = note.querySelector('.note__edit');
@@ -110,20 +141,9 @@ class Notes {
         textArea.readOnly = true;
 
         //removes class of active
-        note.classList.remove('active');
+        note.dataset.state = 'inactive';
     }
-    saveContent(event){
-        console.log('tyn to save');
-        //get note
-        const note = event.target.closest('.note');
-        const titleArea = note.querySelector('.note__title');
-        const textArea = note.querySelector('.note__content');
-
-        // set new default values
-        // reset values
-        textArea.defaultValue = textArea.value;
-        titleArea.defaultValue = titleArea.value;
-    }
+    
 }
 
 

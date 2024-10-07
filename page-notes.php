@@ -20,9 +20,10 @@ get_header();
         while ($the_notes_posts->have_posts()) {
             $the_notes_posts->the_post();
             ?>
-                <li data-id="<?php echo get_the_ID()?>" class="note">
+                <li data-id="<?php echo get_the_ID()?>" data-state="inactive" class="note">
                     <input readonly class="note__title" type="text" value="<?php echo esc_attr(get_the_title())?>">
                     <textarea readonly class="note__content"><?php echo esc_attr(strip_tags(get_the_content()))?></textarea>
+                    <div class="note__spinner-container"></div>
                     <button class="note__btn note__edit">Edit</button>
                     <button class="note__btn note__save hidden">Save</button>
                     <button class="note__btn note__delete">Delete</button>
