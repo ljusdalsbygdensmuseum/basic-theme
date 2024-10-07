@@ -4,6 +4,7 @@ class Notes {
         this.noteTextArea = document.querySelectorAll('.note__content');
         this.noteDeleteBtn = document.querySelectorAll('.note__delete');
         this.noteEditBtn = document.querySelectorAll('.note__edit');
+        this.noteSaveBtn = document.querySelectorAll('.note__save');
 
         this.events();
     }
@@ -12,13 +13,16 @@ class Notes {
             deleteBtn.addEventListener('click', (event) => this.delete(event));
         });
         this.noteEditBtn.forEach(editBtn => {
-            editBtn.addEventListener('click', () => this.openEdit());
+            editBtn.addEventListener('click', (event) => this.clickEdit(event));
         });
+        this.noteSaveBtn.forEach(saveBtn => {
+            saveBtn.addEventListener('click', (event) => this.saveContent(event));
+        });
+
     }
     async delete(event){
         //get ID of note
-        const ID = event.target.closest('.note').id;
-
+        const ID = event.target.closest('.note').dataset.id;
         
         // universal data are set in /inc/enqueue
         const response = await fetch(universalData.root_url+'/wp-json/wp/v2/ljm_note/'+ID, {
@@ -28,7 +32,6 @@ class Notes {
                 'X-WP-Nonce': universalData.nonce
             }
         }).then(response => {
-            
             if(response.status >= 400){
                 console.log('Failed to prosess the request, Status: '+ response.status);
                 console.log(response)
@@ -55,8 +58,71 @@ class Notes {
         });
 
     }
-    openEdit(){
-        console.log('edit clicked');
+    clickEdit(event){
+        //get note
+        const note = event.target.closest('.note');
+        const editbtn = note.querySelector('.note__edit');
+        const savebtn = note.querySelector('.note__save');
+        const titleArea = note.querySelector('.note__title');
+        const textArea = note.querySelector('.note__content');
+
+        if(note.classList.contains('active')){
+            this.closeEdit(note);
+        }else{
+            this.openEdit(note);
+        }
+    }
+    openEdit(note){
+        const editbtn = note.querySelector('.note__edit');
+        const savebtn = note.querySelector('.note__save');
+        const titleArea = note.querySelector('.note__title');
+        const textArea = note.querySelector('.note__content');
+
+        // toggle save and edit btn
+        editbtn.innerHTML = 'Cancel';
+        savebtn.classList.remove('hidden');
+
+        // remove readonly
+        titleArea.readOnly = false;
+        textArea.readOnly = false;
+
+        textArea.focus();
+
+        //add class of active
+        note.classList.add('active');
+    }
+    closeEdit(note){
+        const editbtn = note.querySelector('.note__edit');
+        const savebtn = note.querySelector('.note__save');
+        const titleArea = note.querySelector('.note__title');
+        const textArea = note.querySelector('.note__content');
+
+        // reset values
+        textArea.value = textArea.defaultValue;
+        titleArea.value = titleArea.defaultValue;
+
+        // toggle save and edit btn
+        editbtn.innerHTML = 'Edit';
+        savebtn.classList.add('hidden');
+
+        // add readonly
+        titleArea.readOnly = true;
+        textArea.readOnly = true;
+
+        //removes class of active
+        note.classList.remove('active');
+    }
+    saveContent(event){
+        console.log('tyn to save');
+        //get note
+        const note = event.target.closest('.note');
+        const titleArea = note.querySelector('.note__title');
+        const textArea = note.querySelector('.note__content');
+
+        // set new default values
+        // reset values
+        textArea.defaultValue = textArea.value;
+        titleArea.defaultValue = titleArea.value;
     }
 }
 

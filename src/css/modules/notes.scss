@@ -4,7 +4,7 @@ padding-bottom: 1.5rem;
 margin-bottom: 1rem;
 border: solid;
 margin-top: 0;
-opacity: 1;
+opacity: 1; 
     &__container{
         list-style: none;
         margin: 0;
@@ -16,7 +16,6 @@ opacity: 1;
         margin-bottom: .5rem;
     }
     &__title{
-        border: none;
         padding: 0;
         margin: 0;
         font-size: x-large;
@@ -30,6 +29,12 @@ opacity: 1;
     }
     &__btn{
         display: inline;
+    }
+    input:read-only, textarea:read-only{
+        border: none;
+        *:focus{
+            border: none;
+        }
     }
 }
 
