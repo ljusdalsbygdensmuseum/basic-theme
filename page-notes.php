@@ -15,7 +15,14 @@ get_header();
 <?php page_banner(get_the_ID())?>
 <main class="container">
     <ul class="note__container">
-        
+        <li id="new-note" class="note">
+            <h3>New note</h3>
+            <input class="note__title" type="text" placeholder="Title">
+            <textarea class="note__content" placeholder="Content"></textarea>
+            <div class="note__spinner-container"></div>
+            <button class="note__btn note__create">Save</button>
+        </li>
+        <h3>my notes</h3>
         <?php
         while ($the_notes_posts->have_posts()) {
             $the_notes_posts->the_post();

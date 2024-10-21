@@ -5,6 +5,7 @@ class Notes {
         this.noteDeleteBtn = document.querySelectorAll('.note__delete');
         this.noteEditBtn = document.querySelectorAll('.note__edit');
         this.noteSaveBtn = document.querySelectorAll('.note__save');
+        this.noteCreateBtn = document.querySelectorAll('.note__create');
 
         this.events();
     }
@@ -17,6 +18,9 @@ class Notes {
         });
         this.noteSaveBtn.forEach(saveBtn => {
             saveBtn.addEventListener('click', (event) => this.saveContent(event));
+        });
+        this.noteCreateBtn.forEach(saveBtn => {
+            saveBtn.addEventListener('click', (event) => this.createContent(event));
         });
 
     }
@@ -92,6 +96,39 @@ class Notes {
         // set new default values
         textArea.defaultValue = textArea.value;
         titleArea.defaultValue = titleArea.value;
+    }
+    async createContent(event){
+        //get note
+        const note = event.target.closest('.note');
+        const titleArea = note.querySelector('.note__title');
+        const textArea = note.querySelector('.note__content');
+        const spinner = note.querySelector('.note__spinner-container');
+
+        //loading visual
+        spinner.innerHTML = '<span class="loader"></span>';
+
+        //data
+        const fieldData = {
+            title: titleArea.value,
+            content: textArea.value,
+            status: 'publish'
+        };
+        console.log(fieldData);
+
+        // universal data are set in /inc/enqueue
+        // fetch post without id to make new posts
+        const response = await fetch(universalData.root_url+'/wp-json/wp/v2/ljm_note/', {
+            method: 'POST',
+            body: JSON.stringify(fieldData),
+            headers: {
+                'Content-type': 'application/json',
+                'X-WP-Nonce': universalData.nonce
+            }
+        }).then(response => response.json()).then(responseData=>{
+            // remove spinner
+            spinner.innerHTML = '';
+            console.log(responseData);
+        });
     }
     clickEdit(event){
         //get note
