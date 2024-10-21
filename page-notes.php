@@ -22,7 +22,9 @@ get_header();
             <div class="note__spinner-container"></div>
             <button class="note__btn note__create">Save</button>
         </li>
+    </ul>
         <h3>my notes</h3>
+    <ul id="note__container" class="note__container">
         <?php
         while ($the_notes_posts->have_posts()) {
             $the_notes_posts->the_post();

@@ -1,11 +1,11 @@
 class Notes {
     constructor(){
-        this.noteTitleArea = document.querySelectorAll('.note__title');
-        this.noteTextArea = document.querySelectorAll('.note__content');
+        this.noteArea = document.querySelector('#note__container');
         this.noteDeleteBtn = document.querySelectorAll('.note__delete');
         this.noteEditBtn = document.querySelectorAll('.note__edit');
         this.noteSaveBtn = document.querySelectorAll('.note__save');
         this.noteCreateBtn = document.querySelectorAll('.note__create');
+        this.eventsActive = false;
 
         this.events();
     }
@@ -23,6 +23,7 @@ class Notes {
             saveBtn.addEventListener('click', (event) => this.createContent(event));
         });
 
+        this.eventsActive = true;
     }
     async delete(event){
         //get ID of note
@@ -124,10 +125,33 @@ class Notes {
                 'Content-type': 'application/json',
                 'X-WP-Nonce': universalData.nonce
             }
+            // then response => response.json() fetches the response then you can grab the data
         }).then(response => response.json()).then(responseData=>{
             // remove spinner
             spinner.innerHTML = '';
             console.log(responseData);
+
+
+
+            // add the new note visually
+            this.noteArea.insertAdjacentHTML('afterbegin', `
+                <li data-id="${responseData.id}" data-state="inactive" class="note">
+                    <input readonly class="note__title" type="text" value="${responseData.title.rendered}">
+                    <textarea readonly class="note__content">${responseData.content.raw}</textarea>
+                    <div class="note__spinner-container"></div>
+                    <button class="note__btn note__edit">Edit</button>
+                    <button class="note__btn note__save hidden">Save</button>
+                    <button class="note__btn note__delete">Delete</button>
+                </li>
+            `);
+            // re selecting and reasigning events
+            let deleteBtn = document.querySelectorAll('.note__delete')[0];
+            let editBtn = document.querySelectorAll('.note__edit')[0];
+            let saveBtn = document.querySelectorAll('.note__save')[0];
+            
+            deleteBtn.addEventListener('click', (event) => this.delete(event));
+            editBtn.addEventListener('click', (event) => this.clickEdit(event));
+            saveBtn.addEventListener('click', (event) => this.saveContent(event));
         });
     }
     clickEdit(event){
