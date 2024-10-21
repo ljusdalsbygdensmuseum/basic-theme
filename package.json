@@ -1,7 +1,7 @@
 {
   "name": "fictional-university-theme",
   "version": "1.0.0",
-  "description": "",
+  "description": "Following \"Learn PHP, JavaScript, WordPress theming &amp; the WP REST API to Create Custom &amp; Interactive WordPress Websites\" on udemy.",
   "main": "index.js",
   "scripts": {
     "build": "wp-scripts build",
