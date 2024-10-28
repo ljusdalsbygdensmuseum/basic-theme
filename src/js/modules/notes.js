@@ -112,7 +112,6 @@ class Notes {
         const fieldData = {
             title: titleArea.value,
             content: textArea.value,
-            status: 'publish'
         };
         console.log(fieldData);
 
@@ -136,7 +135,7 @@ class Notes {
             // add the new note visually
             this.noteArea.insertAdjacentHTML('afterbegin', `
                 <li data-id="${responseData.id}" data-state="inactive" class="note">
-                    <input readonly class="note__title" type="text" value="${responseData.title.rendered}">
+                    <input readonly class="note__title" type="text" value="${responseData.title.raw}">
                     <textarea readonly class="note__content">${responseData.content.raw}</textarea>
                     <div class="note__spinner-container"></div>
                     <button class="note__btn note__edit">Edit</button>
