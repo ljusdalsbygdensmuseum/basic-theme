@@ -78,7 +78,6 @@ class Notes {
             title: titleArea.value,
             content: textArea.value
         };
-        console.log(fieldData);
 
         // universal data are set in /inc/enqueue
         const response = await fetch(universalData.root_url+'/wp-json/wp/v2/ljm_note/'+note.dataset.id, {
@@ -113,7 +112,6 @@ class Notes {
             title: titleArea.value,
             content: textArea.value,
         };
-        console.log(fieldData);
 
         // universal data are set in /inc/enqueue
         // fetch post without id to make new posts
@@ -130,7 +128,10 @@ class Notes {
             spinner.innerHTML = '';
             console.log(responseData);
 
-
+            if (responseData.status == '403') {
+                alert(responseData.statusText);
+                return;
+            }
 
             // add the new note visually
             this.noteArea.insertAdjacentHTML('afterbegin', `
