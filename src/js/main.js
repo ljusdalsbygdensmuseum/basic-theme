@@ -3,6 +3,7 @@ const $ = jQuery;
 import leafletMaps from './modules/leaflet-maps';
 import liveSearch from './modules/live-search';
 import Notes from './modules/notes';
+import Like from './modules/likes';
 
 if($('#map_container').length > 0){
     let markers = [];
@@ -38,3 +39,7 @@ if($('#map_container').length > 0){
 const search = new liveSearch();
 
 const note = new Notes();
+
+if (document.querySelector('.heart-container')) {
+    const like = new Like();
+}

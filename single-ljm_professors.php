@@ -36,9 +36,9 @@ while(have_posts()){
         ));
         
         if ($user_like_posts->found_posts) {
-            $user_liked = "true";
+            $user_liked = true;
         }else{
-            $user_liked = "false";
+            $user_liked = false;
         }
     ?>
     <div data-user_liked="<?php echo $user_liked ?>" class="heart-container">

@@ -235,7 +235,7 @@ header .container-fluid ul li{
 .heart-dorment{
     display: inline;
 }
-.heart-container[data-user_liked="true"]{
+.heart-container[data-user_liked="1"]{
     .heart-active{
         display: inline;
     }
