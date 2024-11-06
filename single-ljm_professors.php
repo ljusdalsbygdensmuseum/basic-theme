@@ -12,6 +12,11 @@ while(have_posts()){
     <?php the_post_thumbnail('medium', ['class' => 'professor-bio-img'])?>
 
     <?php the_content() ?>
+    <div class="heart-container">
+        <span class="heart heart-dorment">♡</span>
+        <span class="heart heart-active">♥</span>
+        <span class="heart-count">3 likes</span>
+    </div>
     <?php
     //Grab and sanitize values and explodes into an array
     $related_posts = explode(', ', sanitize_text_field(get_post_meta(get_the_ID(), 'ljm_professors_related_programs', TRUE)));
