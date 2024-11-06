@@ -23,8 +23,25 @@ while(have_posts()){
                 )
             )
         ));
+        $user_like_posts = new WP_Query(array(
+            'author' => get_current_user_id(),
+            'post_type' => 'ljm_like',
+            'meta_query' => array(
+                array(
+                    'key' => 'ljm_like_prof_id',
+                    'compare' => '=',
+                    'value' => get_the_ID()
+                )
+            )
+        ));
+        
+        if ($user_like_posts->found_posts) {
+            $user_liked = "true";
+        }else{
+            $user_liked = "false";
+        }
     ?>
-    <div data-active="false" class="heart-container">
+    <div data-user_liked="<?php echo $user_liked ?>" class="heart-container">
         <span class="heart heart-dorment">♡</span>
         <span class="heart heart-active">♥</span>
         <span class="heart-count"><?php echo $like_posts->found_posts;// found posts returns the num of posts starting with 1 ?> likes</span> 
