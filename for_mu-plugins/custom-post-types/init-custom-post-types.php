@@ -261,11 +261,11 @@ $like_args = array(
     ),
     'meta_box'  => array(
         array(
-            'ID'    => 'prof-id',
+            'ID'    => 'prof_id',
             'title' => 'Professor ID',
             'meta_fields'   => array(
                 array(
-                    'key'   => 'prof-id',
+                    'key'   => 'prof_id',
                     'type'  => 'number',
                 )
             ),

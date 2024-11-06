@@ -12,10 +12,22 @@ while(have_posts()){
     <?php the_post_thumbnail('medium', ['class' => 'professor-bio-img'])?>
 
     <?php the_content() ?>
-    <div class="heart-container">
+    <?php
+        $like_posts = new WP_Query(array(
+            'post_type' => 'ljm_like',
+            'meta_query' => array(
+                array(
+                    'key' => 'ljm_like_prof_id',
+                    'compare' => '=',
+                    'value' => get_the_ID()
+                )
+            )
+        ));
+    ?>
+    <div data-active="false" class="heart-container">
         <span class="heart heart-dorment">♡</span>
         <span class="heart heart-active">♥</span>
-        <span class="heart-count">3 likes</span>
+        <span class="heart-count"><?php echo $like_posts->found_posts;// found posts returns the num of posts starting with 1 ?> likes</span> 
     </div>
     <?php
     //Grab and sanitize values and explodes into an array
