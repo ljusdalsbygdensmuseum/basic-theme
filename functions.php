@@ -9,5 +9,6 @@ require get_template_directory() . '/inc/adjusting-queries.php';
 require get_template_directory() . '/inc/re-route-search.php';
 require get_template_directory() . '/inc/roles-login.php';
 require get_template_directory() . '/inc/filter-post-data.php';
+require get_template_directory() . '/inc/re-route-like.php';
 
 ?>
