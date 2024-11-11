@@ -34,17 +34,24 @@ while(have_posts()){
                 )
             )
         ));
+
+        //Id of like post
+        $like_id = '';
+
+        if (isset($user_like_posts->posts[0]->ID)) {
+            $like_id = $user_like_posts->posts[0]->ID;
+        }
         
-        if ($user_like_posts->found_posts) {
+        if ($user_like_posts->found_posts && is_user_logged_in()) {
             $user_liked = true;
         }else{
             $user_liked = false;
         }
     ?>
-    <div data-user_liked="<?php echo $user_liked ?>" class="heart-container">
+    <div data-user_liked="<?php echo $user_liked ?>" data-like_id="<?php echo $like_id?>" data-prof_id="<?php echo get_the_ID()?>" class="heart-container">
         <span class="heart heart-dorment">♡</span>
         <span class="heart heart-active">♥</span>
-        <span class="heart-count"><?php echo $like_posts->found_posts;// found posts returns the num of posts starting with 1 ?> likes</span> 
+        <span data-count="<?php echo $like_posts->found_posts;?>" class="heart-count"><?php echo $like_posts->found_posts;// found posts returns the num of posts starting with 1 ?> likes</span> 
     </div>
     <?php
     //Grab and sanitize values and explodes into an array
