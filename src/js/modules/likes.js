@@ -15,11 +15,43 @@ class Like {
             this.remove_like();
         }
     }
-    add_like(){
-        this.likebtn.dataset.user_liked = 1;
+    async add_like(){
+        try {
+            // request to add like
+            const request = await fetch(universalData.root_url+ '/wp-json/ljm/v1/manage_like', {
+                method: 'POST',
+            });
+            if (!request.ok) {
+                throw new Error(`Response status: ${request.status}`);
+            }
+            const json = await request.json();
+            console.log(json)
+
+            //visually changes the heart of like btn
+            this.likebtn.dataset.user_liked = 1;
+
+        } catch (error) {
+            console.error(error.message);
+        }
     }
-    remove_like(){
-        this.likebtn.dataset.user_liked = '';
+    async remove_like(){
+        try {
+            // request to add like
+            const request = await fetch(universalData.root_url+ '/wp-json/ljm/v1/manage_like', {
+                method: 'DELETE',
+            });
+            if (!request.ok) {
+                throw new Error(`Response status: ${request.status}`);
+            }
+            const json = await request.json();
+            console.log(json)
+
+            //visually changes the heart of like btn
+            this.likebtn.dataset.user_liked = '';
+
+        } catch (error) {
+            console.error(error.message);
+        }
     }
 }
 
