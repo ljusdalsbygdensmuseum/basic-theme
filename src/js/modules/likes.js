@@ -17,9 +17,18 @@ class Like {
     }
     async add_like(){
         try {
+            const fieldData = {
+                prof_id: 12,
+                user_id: 34
+            }
+            console.log(fieldData);
             // request to add like
             const request = await fetch(universalData.root_url+ '/wp-json/ljm/v1/manage_like', {
                 method: 'POST',
+                body: JSON.stringify(fieldData),
+                headers: {
+                    'Content-type': 'application/json'
+                }
             });
             if (!request.ok) {
                 throw new Error(`Response status: ${request.status}`);

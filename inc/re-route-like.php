@@ -16,8 +16,19 @@ function re_route_like() {
 }
 
 
-function like_add_post() {
-    return 'add me';
+function like_add_post($data) {
+    $user_id = sanitize_text_field($data['user_id']);
+    $prof_id = sanitize_text_field($data['prof_id']);
+
+    wp_insert_post(array(
+        'post_type' => 'ljm_like',
+        'post_status' => 'publish',
+        'post_title' => $user_id,
+        'meta_input' => array(
+            'ljm_like_prof_id' => $prof_id
+        )
+    ));
+    return $user_id;
 }
 
 function like_delete_post() {
