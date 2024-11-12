@@ -216,7 +216,7 @@ new ljm_custom_post_type($campus_args);
 //--------------------------------------------------------------------------------------------------------------------------------------------
 //NOTES
 
-$campus_args = array(
+$note_args = array(
     'post_type' => 'note',
     'prefix'    => 'ljm',
     'args' => array(
@@ -238,9 +238,43 @@ $campus_args = array(
 );
 
 
-new ljm_custom_post_type($campus_args);
+new ljm_custom_post_type($note_args);
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+//NOTES
+
+$like_args = array(
+    'post_type' => 'like',
+    'prefix'    => 'ljm',
+    'args' => array(
+        'public'        => false, // ---------------makes so that search queries wont accedentaly grab them
+        'show_ui'       => true, // ---------------- makes a non-public cpt visible in the admin
+        'supports'      => array('title'),
+        'labels'        => array(
+            'name'          => 'Likes',
+            'add_new'       => 'Add Like',
+            'add_new_item'  => 'Add Like',
+            'edit_item'     => 'Edit Like',
+            'singular_name' => 'Likes'
+        ),
+        'menu_icon'     => 'dashicons-heart'
+    ),
+    'meta_box'  => array(
+        array(
+            'ID'    => 'prof_id',
+            'title' => 'Professor ID',
+            'meta_fields'   => array(
+                array(
+                    'key'   => 'prof_id',
+                    'type'  => 'number',
+                )
+            ),
+        ),
+    ),
+);
 
 
+new ljm_custom_post_type($like_args);
 //--------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------
 // metaboxes for existing post types

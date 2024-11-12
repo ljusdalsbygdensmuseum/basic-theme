@@ -219,4 +219,28 @@ header .container-fluid ul li{
         transform: rotate(360deg);
     }
     } 
+
+// heart counter
+.heart-container{
+    border: 2px #6D454C solid;
+    display: inline;
+    background-color: rgb(235, 228, 219);
+    padding: 0.2rem;
+    color: #6D454C;
+    border-radius: 0.2rem;
+}
+.heart-active{
+    display: none;
+}
+.heart-dorment{
+    display: inline;
+}
+.heart-container[data-user_liked="1"]{
+    .heart-active{
+        display: inline;
+    }
+    .heart-dorment{
+        display: none;
+    }
+}
 /*https://coolors.co/fabc2a-223843-bee3db-6d454c-ffbcb5*/

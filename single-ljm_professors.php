@@ -13,6 +13,47 @@ while(have_posts()){
 
     <?php the_content() ?>
     <?php
+        $like_posts = new WP_Query(array(
+            'post_type' => 'ljm_like',
+            'meta_query' => array(
+                array(
+                    'key' => 'ljm_like_prof_id',
+                    'compare' => '=',
+                    'value' => get_the_ID()
+                )
+            )
+        ));
+        $user_like_posts = new WP_Query(array(
+            'author' => get_current_user_id(),
+            'post_type' => 'ljm_like',
+            'meta_query' => array(
+                array(
+                    'key' => 'ljm_like_prof_id',
+                    'compare' => '=',
+                    'value' => get_the_ID()
+                )
+            )
+        ));
+
+        //Id of like post
+        $like_id = '';
+
+        if (isset($user_like_posts->posts[0]->ID)) {
+            $like_id = $user_like_posts->posts[0]->ID;
+        }
+        
+        if ($user_like_posts->found_posts && is_user_logged_in()) {
+            $user_liked = true;
+        }else{
+            $user_liked = false;
+        }
+    ?>
+    <div data-user_liked="<?php echo $user_liked ?>" data-like_id="<?php echo $like_id?>" data-prof_id="<?php echo get_the_ID()?>" class="heart-container">
+        <span class="heart heart-dorment">♡</span>
+        <span class="heart heart-active">♥</span>
+        <span data-count="<?php echo $like_posts->found_posts;?>" class="heart-count"><?php echo $like_posts->found_posts;// found posts returns the num of posts starting with 1 ?> likes</span> 
+    </div>
+    <?php
     //Grab and sanitize values and explodes into an array
     $related_posts = explode(', ', sanitize_text_field(get_post_meta(get_the_ID(), 'ljm_professors_related_programs', TRUE)));
 
